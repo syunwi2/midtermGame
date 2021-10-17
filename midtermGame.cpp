@@ -102,19 +102,19 @@ void showItem() {
 	micStatus->show();
 	note->show();
 	coffee->show();
-	for (int i = coffeeLimit; i > 0; i--)
-		coffeeHeart[i - 1]->show();
+	for (int i = 0; i < 2; i++)
+		coffeeHeart[i]->show();
 	snack->show();
-	for (int i = snackLimit; i > 0; i--)
-		snackHeart[i - 1]->show();
+	for (int i = 0; i < 5; i++)
+		snackHeart[i]->show();
 	phone->show();
 	wake->show();
 	attitude->show();
-	for (int i = attitudeLevel; i > 0; i--)
-		attitudeScore[i - 1]->show();
+	for (int i = 0; i < 6; i++)
+		attitudeScore[i]->show();
 	study->show();
-	for (int i = studyLevel; i > 0; i--)
-		studyScore[i - 1]->show();
+	for (int i = 0; i < 6; i ++)
+		studyScore[i]->show();
 }
 
 // 발생한 이벤트에 선택된 아이템이 적절한지 판단하기 위한 변수
@@ -135,11 +135,11 @@ void attitudeDecrease() {
 // 태도 점수 부여
 void attitudeIncrease() {
 	int a = 1;
-	if (eventCode == 5) // coffee
+	if (itemCode == 5) // coffee
 		a = 2;
-	attitudeLevel = min(6, studyLevel + a);
-	for (int i = 0; i < studyLevel; i++)
-		studyScore[i]->show();
+	attitudeLevel = min(6, attitudeLevel + a);
+	for (int i = 0; i < attitudeLevel; i++)
+		attitudeScore[i]->show();
 }
 
 // 성적 점수 감점
@@ -342,10 +342,8 @@ int main() {
 
 		// 부적절하게 선택하면 태도 점수 감점
 		itemCode = 1;
-		if (eventCode != itemCode) {
-			background->setImage("images/채팅감점.jpg");
+		if (eventCode != itemCode)
 			attitudeDecrease();
-		}
 
 		// 랜덤 이벤트 혹은 학점 부여
 		makeEvent();
@@ -369,10 +367,9 @@ int main() {
 		// 마이크 끄는 것은 감점이나 이벤트 발생 시키지 않음
 		itemCode = 2;
 		if (isMicOn) {
-			if (eventCode != itemCode) {
-				background->setImage("images/마이크감점.jpg");
+			if (eventCode != itemCode)
 				attitudeDecrease();
-			}
+
 			// 랜덤 이벤트 혹은 학점 부여
 			makeEvent();
 		}
@@ -434,10 +431,8 @@ int main() {
 			itemCode = 5;
 
 			// 마이크 켜진 상태에서 마시면 태도점수 감점
-			if (isMicOn) {
-				background->setImage("images/마이크감점.jpg");
+			if (isMicOn)
 				attitudeDecrease();
-			}
 
 			// 마이크 꺼진 상태에서 마시면 태도 점수 + 2
 			else
@@ -472,10 +467,8 @@ int main() {
 			itemCode = 6;
 
 			// 마이크 켜진 상태에서 먹으면 태도점수 감점
-			if (isMicOn) {
-				background->setImage("images/마이크감점.jpg");
+			if (isMicOn)
 				attitudeDecrease();
-			}
 
 			// 마이크 꺼진 상태에서 먹으면 태도 점수 +1
 			else
@@ -510,10 +503,8 @@ int main() {
 			itemCode = 7;
 
 			// 마이크 켜진 상태에서 사용하면 태도 점수 감점
-			if (isMicOn) {
-				background->setImage("images/마이크감점.jpg");
+			if (isMicOn)
 				attitudeDecrease();
-			}
 
 			// 마이크 꺼진 상태에서 사용하면 태도 점수 +1, 학습 점수 -1
 			else {
